@@ -6,9 +6,11 @@
   "scripts": {
     "test": "python -m unittest discover -p test_*.py",
     "install": "pip install -r requirements.txt",
-    "start": "python run.py",
+    "start": "python app.py",
+    "stop": "python stop.py",
     "sonar": "sonar-scanner",
-    "coverage": "coverage run --source . -m unittest discover && coverage xml -o coverage-reports/coverage.xml"
+    "coverage": "coverage run --source . -m unittest discover && coverage xml -o coverage-reports/coverage.xml",
+    "functional-test": "newman run suite1.postman_collection -e suite1_local.postman_environment"
   },
   "author": "",
   "license": "ISC"

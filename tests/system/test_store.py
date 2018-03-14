@@ -10,8 +10,8 @@ class TestSystemStore(BaseTest):
             with self.app_context():
                 response = client.post('/store/test')
 
-                self.assertEqual(response.status_code, 201)
-                self.assertEqual(json.loads(response.data), {'name': 'test', 'items': []})
+                self.assertEqual(201, response.status_code)
+                self.assertEqual({'id': 1, 'name': 'test', 'items': []}, json.loads(response.data))
 
     def test_create_duplicate_store(self):
         with self.app() as client:
@@ -44,8 +44,8 @@ class TestSystemStore(BaseTest):
                 response_get = client.get('/store/test')
 
                 self.assertEqual(response_get.status_code, 200)
-                self.assertEqual(json.loads(response_get.data),
-                                 {'name': 'test', 'items': []})
+                self.assertEqual({'id': 1, 'name': 'test', 'items': []},
+                                 json.loads(response_get.data))
 
     def test_store_not_found(self):
         with self.app() as client:
@@ -65,12 +65,18 @@ class TestSystemStore(BaseTest):
 
                 response_get = client.get('/store/test')
                 self.assertEqual(response_get.status_code, 200)
-                self.assertEqual(json.loads(response_get.data),
-                                 {'name': 'test',
-                                  'items': [{
-                                      'name': 'Car',
-                                      'price': 200.00
-                                  }]})
+                self.assertEqual(
+                    {
+                        'id': 1,
+                        'name': 'test',
+                        'items': [
+                            {
+                                'name': 'Car',
+                                'price': 200.00
+                            }
+                        ]
+                    },
+                    json.loads(response_get.data))
 
     def test_store_list_with_items(self):
         with self.app() as client:
@@ -93,6 +99,7 @@ class TestSystemStore(BaseTest):
                 self.assertEqual(json.loads(response_list.data)['stores'],
                                  [
                                      {
+                                         'id': 1,
                                          'name': 'Vehicles',
                                          'items': [
                                              {
@@ -106,6 +113,7 @@ class TestSystemStore(BaseTest):
                                          ]
                                      },
                                      {
+                                         'id': 2,
                                          'name': 'Furniture',
                                          'items': [
                                              {
@@ -127,8 +135,9 @@ class TestSystemStore(BaseTest):
 
                 response_list = client.get('/stores')
                 self.assertEqual(response_list.status_code, 200)
-                self.assertEqual(json.loads(response_list.data)['stores'],
-                                 [{
-                                     'name': 'Vehicles',
-                                     'items': []
-                                 }])
+                self.assertEqual([{
+                    'id': 1,
+                    'name': 'Vehicles',
+                    'items': []
+                }],
+                    json.loads(response_list.data)['stores'])
