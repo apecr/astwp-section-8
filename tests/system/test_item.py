@@ -20,7 +20,7 @@ class ItemTest(BaseTest):
                                                 'Content-Type': 'application/json'
                                             })
                 auth_token = json.loads(auth_response.data)['access_token']
-                self.auth_token = f'JWT {auth_token}'
+                self.auth_token = 'JWT {}'.format(auth_token)
 
     def test_get_item_no_auth(self):
         with self.app() as client:

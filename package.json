@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "python -m unittest discover -p test_*.py",
+    "test": "python -m pytest",
     "install": "pip install -r requirements.txt",
     "start": "python app.py",
     "stop": "python stop.py",
